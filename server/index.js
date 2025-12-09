@@ -7,6 +7,39 @@ app.use(cors())
 app.use(express.json())
 
 
+// MongoDB Connection
+const con = mongoose.connect("mongodb://localhost:27017/tracker")
+if(con){
+  console.log("MonoDB is Connected !!")
+}else{
+  console.log("MongoDB is Not Connected !!")
+}
+
+const IncomeSchema =new mongoose.Schema({
+  Date :{
+    type:String,
+    default:()=>{
+      const d = new Date()
+       return d.toISOString().split("T")[0]; // YYYY-MM-DD
+    }
+  },
+  Income:{
+    type:Number,
+    required:true
+  },
+  Why:{
+    type:String,
+    required:true
+  }
+})
+
+const IncomeModal = mongoose.model("Incomes",IncomeSchema)
+
+
+
+
+
+
 
 const user = {
   email: "test@example.com",
@@ -22,6 +55,21 @@ app.post("/login", (req, res) => {
   }
 });
 
+
+app.post("/income",async(req,res)=>{
+  try{
+const {Income,Why} = req.body;
+
+  const data = await IncomeModal.create({
+    Income,Why
+  })
+  res.status(200).json({msg:"Income Added",data})
+
+  }catch(error){
+    res.status(500).json({msg:"Error",error:error.message})
+  }
+  
+})
 
 app.listen(port,()=>{
     console.log(`Server is Running at port ${port}`)

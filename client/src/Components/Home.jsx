@@ -1,52 +1,21 @@
-import { useState } from "react";
+
 import Modals from "./Modals";
-const Home = () => {
-  const [amount,setAmount] = useState(0);
-  const [totalIncome, setTotalIncome] = useState(0);
-  const [incomeList, setIncomeList] = useState([]);
 
-  const [examount,setExAmount] = useState(0);
-  const [totalExpense,setTotalExpense] = useState(0);
-  const [expenseList,setExpenseList] = useState([])
 
-  
-  
-
- const handleIncome = () => {
-  if (!amount) return;  // empty amount ignore
-
-  setTotalIncome(prev => prev + amount);
-
-  setIncomeList(prev => [
-    ...prev,
-    { amount }
-  ]);
-
-  setAmount(0);
-
-};
-
-const handleExpense = () =>{
-  if (!examount) return ;
-
-  setTotalExpense(prev => prev+examount);
-
-  setExpenseList(prev => [
-    ...prev,
-    {examount}
-  ])
-  setExAmount(0)
-}
-
+const Home = ({}) => {
+    const user = "Shashwat Srivastava"
 
   return (
     <>
-      <div className="button w-25 mx-auto d-flex gap-2">
+    <hr />
+    <h1>Dashboard : {user}</h1>
+    <hr />
+      <div className="button w-50 mt-5 mx-auto d-flex gap-2">
 
         {/* Income Button */}
         <button
           type="button"
-          className="btn btn-success form-control mt-3"
+          className="btn btn-success p-5  w-100 form-control mt-3"
           data-bs-toggle="modal"
           data-bs-target="#incomeModal"
         >
@@ -57,15 +26,15 @@ const handleExpense = () =>{
        <Modals
         id="incomeModal"
         title="Income"
-        value={amount}
-        setValue={setAmount}
-        onSubmit={handleIncome}
+        value={""}
+        setValue={""}
+        onSubmit={""}
       />
 
         {/* Expense Button */}
         <button
           type="button"
-          className="btn btn-danger form-control mt-3"
+          className="btn btn-danger p-5 w-100 form-control mt-3"
           data-bs-toggle="modal"
           data-bs-target="#expenseModal"
         >
@@ -76,40 +45,13 @@ const handleExpense = () =>{
         <Modals
         id="expenseModal"
         title="Expense"
-        value={examount}
-        setValue={setExAmount}
-        onSubmit={handleExpense}
+        value={""}
+        setValue={""}
+        onSubmit={""}
       />
       </div>
 
-      <div className="table w-75 mt-5 mx-auto">
-        <hr />
-        <h2 className="text-center text-success">My Finance</h2>
-        <hr />
-        <h3 className="text-center mt-3">Total Income: ₹{totalIncome}</h3>
-        <h3 className="text-center mt-3 text-danger">Total Expense: ₹{totalExpense}</h3>
-
-        <table className="table">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Income</th>
-              <th>Expense</th>
-            </tr>
-          </thead>
-          <tbody>
-
-            {Array.from({length: Math.max(incomeList.length, expenseList.length)}).map((_, index) => (
-      <tr key={index}>
-        <th>{index + 1}</th>
-        <td>{incomeList[index]?.amount || ""}</td>
-        <td>{expenseList[index]?.examount || ""}</td>
-      </tr>
-    ))}
-            
-          </tbody>
-        </table>
-      </div>
+      
     </>
   );
 };

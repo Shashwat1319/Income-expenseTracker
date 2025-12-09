@@ -1,6 +1,18 @@
 import React from 'react'
+import axios from 'axios'
 
-const Modals = ({id,setValue,value,title,onSubmit}) => {
+const Modals = ({id,setValue,value,title,addincome}) => {
+   const [income,setincome] = useState(0);
+    const [why,setWhy] = useState("")
+  const addincome =async()=>{
+ try{
+    const response = await axios.post("http:localhost:5000/income",{income,why})
+    console.log(response.data)
+  }catch(err){
+console.log(err)
+  }
+  }
+ 
   return (
     <>
            <div
@@ -25,7 +37,8 @@ const Modals = ({id,setValue,value,title,onSubmit}) => {
               </div>
 
               <div className="modal-body">
-                <input type="number" placeholder="Amount" className="form-control"  onChange={(e)=>setValue(Number(e.target.value))} value={value}/>
+                <input type="number" placeholder="Amount" className="form-control" onChange={(e)=>{setincome(e.target.value)}} value={value}/>
+                <input type="text" placeholder="Why" className="form-control" onChange={(e)=>{setWhy(e.target.value)}} value={value}/>
               </div>
 
               <div className="modal-footer">
@@ -36,7 +49,7 @@ const Modals = ({id,setValue,value,title,onSubmit}) => {
                 >
                   Close
                 </button>
-                <button type="button" data-bs-dismiss="modal" className="btn btn-primary" onClick={onSubmit}>
+                <button type="button" data-bs-dismiss="modal" className="btn btn-primary" onClick={addincome}>
                   Add Income
                 </button>
               </div>

@@ -13,7 +13,7 @@ const Navbar = ({isLogin,setIsLogin}) => {
 
     <nav className="navbar navbar-expand-lg bg-body-tertiary">
   <div className="container-fluid">
-    <Link className="navbar-brand" to="/">Navbar</Link>
+    <Link className="navbar-brand" to="/">Home</Link>
     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span className="navbar-toggler-icon"></span>
     </button>
@@ -25,7 +25,7 @@ const Navbar = ({isLogin,setIsLogin}) => {
        ):(<button className="nav-link btn text-danger" onClick={handleLogout}>Logout</button>)
     }
        
-       <Link className="nav-link" to="/">Pricing</Link>
+       <Link className="nav-link" to="/income">My Incomes</Link>
       </div>
     </div>
   </div>
