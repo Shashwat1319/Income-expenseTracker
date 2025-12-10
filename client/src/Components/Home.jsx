@@ -2,7 +2,7 @@
 import Modals from "./Modals";
 
 
-const Home = ({}) => {
+const Home = () => {
     const user = "Shashwat Srivastava"
 
   return (
@@ -26,9 +26,7 @@ const Home = ({}) => {
        <Modals
         id="incomeModal"
         title="Income"
-        value={""}
-        setValue={""}
-        onSubmit={""}
+        mode={"income"}
       />
 
         {/* Expense Button */}
@@ -45,9 +43,7 @@ const Home = ({}) => {
         <Modals
         id="expenseModal"
         title="Expense"
-        value={""}
-        setValue={""}
-        onSubmit={""}
+        mode={"expense"}
       />
       </div>
 

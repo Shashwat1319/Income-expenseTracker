@@ -8,12 +8,10 @@ app.use(express.json())
 
 
 // MongoDB Connection
-const con = mongoose.connect("mongodb://localhost:27017/tracker")
-if(con){
-  console.log("MonoDB is Connected !!")
-}else{
-  console.log("MongoDB is Not Connected !!")
-}
+mongoose.connect("mongodb://localhost:27017/tracker")
+  .then(() => console.log("MongoDB is Connected !!"))
+  .catch(() => console.log("MongoDB is Not Connected !!"));
+
 
 const IncomeSchema =new mongoose.Schema({
   Date :{
@@ -33,7 +31,7 @@ const IncomeSchema =new mongoose.Schema({
   }
 })
 
-const IncomeModal = mongoose.model("Incomes",IncomeSchema)
+const IncomeModal = mongoose.model("incomes",IncomeSchema)
 
 
 
@@ -58,12 +56,12 @@ app.post("/login", (req, res) => {
 
 app.post("/income",async(req,res)=>{
   try{
-const {Income,Why} = req.body;
-
+  const {amount,Why} = req.body;
   const data = await IncomeModal.create({
-    Income,Why
+    Income:amount,Why:Why
   })
-  res.status(200).json({msg:"Income Added",data})
+  console.log(data)
+  res.status(201).json({msg:"Income Added",data})
 
   }catch(error){
     res.status(500).json({msg:"Error",error:error.message})
@@ -71,6 +69,17 @@ const {Income,Why} = req.body;
   
 })
 
+app.get("/getincome",async(req,res)=>{
+  try{
+    const data = await IncomeModal.find();
+    res.status(200).json({
+      data:data
+    })
+  }catch(err)
+  {
+    console.log(err)
+  }
+})
 app.listen(port,()=>{
     console.log(`Server is Running at port ${port}`)
 })
