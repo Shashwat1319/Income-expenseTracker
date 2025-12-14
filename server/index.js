@@ -34,6 +34,26 @@ const IncomeSchema =new mongoose.Schema({
 const IncomeModal = mongoose.model("incomes",IncomeSchema)
 
 
+const ExpenseSchema = new mongoose.Schema({
+  Date :{
+    type:String,
+    default:()=>{
+      const d = new Date()
+       return d.toISOString().split("T")[0]; // YYYY-MM-DD
+    }
+  },
+  Expense:{
+    type:Number,
+    required:true
+  },
+  Why:{
+    type:String,
+    required:true
+  }
+})
+
+const ExpenseModal = mongoose.model("expense",ExpenseSchema)
+
 
 
 
@@ -69,6 +89,21 @@ app.post("/income",async(req,res)=>{
   
 })
 
+
+
+app.post("/expense",async(req,res)=>{
+  try {
+    const {amount,Why} = req.body;
+    const data = ExpenseModal.create({
+      Expense:amount,
+      Why:Why
+    })
+     console.log(data)
+  res.status(201).json({msg:"Expense Added",data})
+  } catch (error) {
+     res.status(500).json({msg:"Error",error:error.message})
+  }
+})
 app.get("/getincome",async(req,res)=>{
   try{
     const data = await IncomeModal.find();
