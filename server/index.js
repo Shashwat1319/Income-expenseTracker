@@ -94,7 +94,7 @@ app.post("/income",async(req,res)=>{
 app.post("/expense",async(req,res)=>{
   try {
     const {amount,Why} = req.body;
-    const data = ExpenseModal.create({
+    const data =await ExpenseModal.create({
       Expense:amount,
       Why:Why
     })
