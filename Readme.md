@@ -11,6 +11,10 @@ A simple web application to track your income and expenses in real-time.
 - React
 - Bootstrap
 - JavaScript
+- MongoDB
+- Node.js
+- Express.js
+
 
 ## Installation
 ```bash
@@ -23,6 +27,8 @@ npm run dev
 ## Frontend
 cd server
 npm run dev
+
+
 
 
 
