@@ -80,7 +80,6 @@ app.post("/income",async(req,res)=>{
   const data = await IncomeModal.create({
     Income:amount,Why:Why
   })
-  console.log(data)
   res.status(201).json({msg:"Income Added",data})
 
   }catch(error){
@@ -98,15 +97,31 @@ app.post("/expense",async(req,res)=>{
       Expense:amount,
       Why:Why
     })
-     console.log(data)
+
   res.status(201).json({msg:"Expense Added",data})
   } catch (error) {
      res.status(500).json({msg:"Error",error:error.message})
   }
 })
+
 app.get("/getincome",async(req,res)=>{
   try{
     const data = await IncomeModal.find();
+    res.status(200).json({
+      data:data
+    })
+  }catch(err)
+  {
+    console.log(err)
+  }
+})
+app.listen(port,()=>{
+    console.log(`Server is Running at port ${port}`)
+})
+
+app.get("/getexpense",async(req,res)=>{
+  try{
+    const data = await ExpenseModal.find();
     res.status(200).json({
       data:data
     })

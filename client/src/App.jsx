@@ -7,6 +7,7 @@ import Login from "./Auth/Login";
 import Home from "./Components/Home";
 import Income from "./Components/Income";
 import { useState } from "react";
+import Expense from "./Components/Expense";
 function App() {
   const [isLogin, setIsLogin] = useState(() => {
     return localStorage.getItem("isLogin") === "true";
@@ -44,6 +45,9 @@ function App() {
           <Route
           path="/income"
           element={<Income/>}
+          /><Route
+          path="/expense"
+          element={<Expense/>}
           />
         </Routes>
       </BrowserRouter>
