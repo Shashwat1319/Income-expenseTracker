@@ -4,11 +4,14 @@ import axios from 'axios';
 const Modals = ({ id, title, mode }) => {
   const [amount, setAmount] = useState(0);
   const [Why, setWhy] = useState("");
+  const token = localStorage.getItem("token")
 
   const addEntry = async () => {
     try {
       const url = `http://localhost:5000/${mode}`;
-      const response = await axios.post(url, { amount:Number(amount), Why });
+      const response = await axios.post(url, { amount:Number(amount), Why },{headers:{
+        Authorization: `Bearer ${token}`
+      }});
       console.log(response.data);
 
       // Reset after submit

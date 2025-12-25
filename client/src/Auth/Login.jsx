@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
-const Login = ({ handleLogin }) => {
+const Login = ({setToken}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const nav = useNavigate();
@@ -15,14 +15,15 @@ const Login = ({ handleLogin }) => {
         email,
         password,
       });
+      console.log(response.data)
       if(response.status==200){
       console.log("Login response:", response.data.msg);
-      handleLogin();
+      setToken(response.data.token)
       nav("/");
       }
     
     } catch (error) {
-      console.error("Login failed:", error.response.data.msg);
+      console.error("Login failed:", error.response);
     }
   };
 

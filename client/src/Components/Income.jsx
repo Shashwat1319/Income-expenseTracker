@@ -4,12 +4,11 @@ const Income = () => {
     const [incomedata,setIncomeData] = useState([]);
     const [month,setMonth] = useState(0)
     const [year,setYear] = useState(2026)
-
+    const token = localStorage.getItem("token")
     useEffect(()=>{
 const allIncome=async()=>{
         try{
-            const response = await axios.get(`http://localhost:5000/getincome?month=${month}&year=${year}`)
-            console.log(response.data.data)
+            const response = await axios.get(`http://localhost:5000/getincome?month=${month}&year=${year}`,{headers:{Authorization: `Bearer ${token}`}})
             setIncomeData(response.data.data)
         }catch(err){
             console.log("Error:",err.message)

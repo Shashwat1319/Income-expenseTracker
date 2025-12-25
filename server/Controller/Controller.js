@@ -1,14 +1,12 @@
 
-const user = {
-  email: "test@example.com",
-  password: "123456"
-};
 import { IncomeModal,ExpenseModal,userModal } from "../DbModals/DbModals.js";
+import jwt from "jsonwebtoken"
 
+const Secret = "hello"
 const login = async(req, res) => {
   try{
   const { email, password } = req.body;
-  // Email and password not pass
+  // Email and password Not Pass
   if(!email || !password){
     return res.status(400).json({
       msg:"Email and password required",
@@ -19,9 +17,10 @@ const login = async(req, res) => {
   const user = await userModal.findOne({email})
   //User Not Found
   if (!user) {
-    res.status(404).json({ msg: "User not Found!", error: true });
+    return res.status(404).json({ msg: "User not Found!", error: true });
   } 
-  res.status(200).json({msg:"Login Successfull",success:true,userId:user._id})
+  const token = jwt.sign({email},Secret,{expiresIn:"7d"})
+  res.status(200).json({msg:"Login Successfull",success:true,token})
   }catch(err){
     res.status(500).json({msg:"Internal Server Error",error:err.message})
   }
@@ -30,9 +29,9 @@ const login = async(req, res) => {
 
 const income = async(req,res)=>{
   try{
-  const {amount,Why,userId} = req.body;
+  const {amount,Why} = req.body;
   const data = await IncomeModal.create({
-    userId,
+    userId:req.user._id,
     Income:amount,Why:Why
   })
   res.status(201).json({msg:"Income Added",data})
@@ -49,6 +48,7 @@ const expense = async(req,res)=>{
   try {
     const {amount,Why} = req.body;
     const data =await ExpenseModal.create({
+      userId:req.user._id,
       Expense:amount,
       Why:Why
     })
@@ -62,7 +62,7 @@ const expense = async(req,res)=>{
 const getIncome = async(req,res)=>{
   try{
     const {month,year} = req.query;
-    const filter = {};
+    const filter = {userId:req.user._id};
      if (month !== undefined && year !== undefined) {
       const startDate = new Date(Number(year), Number(month), 1);
       const endDate = new Date(Number(year), Number(month) + 1, 1);
@@ -85,7 +85,7 @@ const getIncome = async(req,res)=>{
 const getExpense =  async(req,res)=>{
   try{
      const {month,year} = req.query;
-     const filter = {};
+     const filter = {userId:req.user._id};
      if (month !== undefined && year !== undefined) {
       const startDate = new Date(Number(year), Number(month), 1);
       const endDate = new Date(Number(year), Number(month) + 1, 1);

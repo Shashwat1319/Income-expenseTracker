@@ -9,7 +9,9 @@ const Expense = () => {
   useEffect(() => {
     const allExpense = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/getexpense?month=${month}&year=${year}`);
+        const response = await axios.get(`http://localhost:5000/getexpense?month=${month}&year=${year}`,{headers:{
+        Authorization: `Bearer ${token}`
+      }});
         setExpenseData(response.data.data);
       } catch (err) {
         console.log("Error:", err.message);

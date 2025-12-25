@@ -1,12 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-const Navbar = ({ isLogin, setIsLogin }) => {
+const Navbar = () => {
   const nav = useNavigate();
+  const token = localStorage.getItem("token")
   const handleLogout = () => {
-    setIsLogin(false);
-    localStorage.removeItem("isLogin"); // clear storage
-    nav("/login"); // or "/" depending on your preference
+    localStorage.removeItem("token");
+    nav("/login"); 
   };
   return (
     <>
@@ -29,7 +29,17 @@ const Navbar = ({ isLogin, setIsLogin }) => {
           <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div className="navbar-nav">
               {/* <Link className="nav-link active" aria-current="page" to="/">Home</Link> */}
-              {!isLogin ? (
+              
+              <Link className="nav-link" to="/addtransaction">
+                Add transaction
+              </Link>
+              <Link className="nav-link" to="/income">
+                My Incomes
+              </Link>
+               <Link className="nav-link" to="/expense">
+                My Expenses
+              </Link>
+              {!token ? (
                 <Link className="nav-link" to="/login">
                   Login
                 </Link>
@@ -41,13 +51,6 @@ const Navbar = ({ isLogin, setIsLogin }) => {
                   Logout
                 </button>
               )}
-
-              <Link className="nav-link" to="/income">
-                My Incomes
-              </Link>
-               <Link className="nav-link" to="/expense">
-                My Expenses
-              </Link>
             </div>
           </div>
         </div>
