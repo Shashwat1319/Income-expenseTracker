@@ -1,12 +1,22 @@
 import mongoose from "mongoose";
 
-const IncomeSchema =new mongoose.Schema({
-  Date :{
+const UserSchema = new mongoose.Schema({
+  email:{
     type:String,
-    default:()=>{
-      const d = new Date()
-       return d.toISOString().split("T")[0]; // YYYY-MM-DD
-    }
+    required:true
+  },
+  password:{
+    type:String,
+    required:true
+  }
+})
+const userModal = new mongoose.model("users",UserSchema)
+
+const IncomeSchema =new mongoose.Schema({
+  userId:{
+    type:mongoose.Schema.ObjectId,
+    ref:"users",
+    required:true
   },
   Income:{
     type:Number,
@@ -16,18 +26,16 @@ const IncomeSchema =new mongoose.Schema({
     type:String,
     required:true
   }
-})
+},{timestamps:true})
 
 const IncomeModal = mongoose.model("incomes",IncomeSchema)
 
 
 const ExpenseSchema = new mongoose.Schema({
-  Date :{
-    type:String,
-    default:()=>{
-      const d = new Date()
-       return d.toISOString().split("T")[0]; // YYYY-MM-DD
-    }
+   userId:{
+    type:mongoose.Schema.ObjectId,
+    ref:"users",
+    required:true
   },
   Expense:{
     type:Number,
@@ -37,9 +45,9 @@ const ExpenseSchema = new mongoose.Schema({
     type:String,
     required:true
   }
-})
+},{timestamps:true})
 
 const ExpenseModal = mongoose.model("expense",ExpenseSchema)
 
-export {IncomeModal,ExpenseModal}
+export {IncomeModal,ExpenseModal,userModal}
 

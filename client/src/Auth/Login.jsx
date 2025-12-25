@@ -15,9 +15,12 @@ const Login = ({ handleLogin }) => {
         email,
         password,
       });
+      if(response.status==200){
       console.log("Login response:", response.data.msg);
-      handleLogin(); // only runs if HTTP 200
+      handleLogin();
       nav("/");
+      }
+    
     } catch (error) {
       console.error("Login failed:", error.response.data.msg);
     }
@@ -44,7 +47,7 @@ const Login = ({ handleLogin }) => {
           />
           <button
             type="submit"
-            className="form-control mt-2 w-100 bg-success text-white"
+            className="form-control mb-3 mt-2 w-100 bg-success text-white"
           >
             Login
           </button>

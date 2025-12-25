@@ -3,28 +3,42 @@ const user = {
   email: "test@example.com",
   password: "123456"
 };
-import { IncomeModal,ExpenseModal } from "../DbModals/DbModals.js";
+import { IncomeModal,ExpenseModal,userModal } from "../DbModals/DbModals.js";
 
 const login = async(req, res) => {
+  try{
   const { email, password } = req.body;
-  if (email === user.email) {
-    res.status(200).json({ msg: "Login Successful!", error: false });
-  } else {
-    res.status(400).json({ msg: "Email Not Found!", error: true });
+  // Email and password not pass
+  if(!email || !password){
+    return res.status(400).json({
+      msg:"Email and password required",
+      success:false
+    })
+  }
+
+  const user = await userModal.findOne({email})
+  //User Not Found
+  if (!user) {
+    res.status(404).json({ msg: "User not Found!", error: true });
+  } 
+  res.status(200).json({msg:"Login Successfull",success:true,userId:user._id})
+  }catch(err){
+    res.status(500).json({msg:"Internal Server Error",error:err.message})
   }
 }
 
 
 const income = async(req,res)=>{
   try{
-  const {amount,Why} = req.body;
+  const {amount,Why,userId} = req.body;
   const data = await IncomeModal.create({
+    userId,
     Income:amount,Why:Why
   })
   res.status(201).json({msg:"Income Added",data})
 
   }catch(error){
-    res.status(500).json({msg:"Error",error:error.message})
+    res.status(500).json({msg:"Internal Server Error",error:error.message})
   }
   
 }
@@ -47,25 +61,48 @@ const expense = async(req,res)=>{
 
 const getIncome = async(req,res)=>{
   try{
-    const data = await IncomeModal.find();
+    const {month,year} = req.query;
+    const filter = {};
+     if (month !== undefined && year !== undefined) {
+      const startDate = new Date(Number(year), Number(month), 1);
+      const endDate = new Date(Number(year), Number(month) + 1, 1);
+
+      filter.createdAt = {
+        $gte: startDate,
+        $lt: endDate
+      };
+    }
+    const data = await IncomeModal.find(filter).sort({createdAt:-1});
     res.status(200).json({
       data:data
     })
   }catch(err)
   {
-    console.log(err)
+    res.status(500).json({msg:"Internal Server Error",error:err.message})
   }
 }
 
 const getExpense =  async(req,res)=>{
   try{
-    const data = await ExpenseModal.find();
+     const {month,year} = req.query;
+     const filter = {};
+     if (month !== undefined && year !== undefined) {
+      const startDate = new Date(Number(year), Number(month), 1);
+      const endDate = new Date(Number(year), Number(month) + 1, 1);
+
+      filter.createdAt = {
+        $gte: startDate,
+        $lt: endDate
+      };
+    }
+    const data = await ExpenseModal.find(filter).sort({createdAt:-1});
     res.status(200).json({
       data:data
     })
   }catch(err)
   {
     console.log(err)
+    res.status(500).json({msg:"Internal Server Error",error:err.message})
   }
 }
 
