@@ -8,7 +8,7 @@ const Home = () => {
     <hr />
     <h1>Dashboard : {user}</h1>
     <hr />
-    <div className="container-fluid">
+    <div className="container">
       <Carousel/>
     </div>
      

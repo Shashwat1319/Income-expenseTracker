@@ -1,6 +1,5 @@
 import { userModal } from "../DbModals/DbModals.js";
 import jwt from "jsonwebtoken"
-const Secret = "hello"
 const auth=async(req,res,next)=>{
 
     const authHeader = req.headers['authorization']
@@ -9,7 +8,7 @@ const auth=async(req,res,next)=>{
     }
     const token = authHeader.split(' ')[1];
     try{
-        const decoded = jwt.verify(token,Secret)
+        const decoded = jwt.verify(token,process.env.SECRET_CODE)
         const user = await userModal.findOne({email:decoded.email})
         if(!user){
             return res.status(401).json({msg:"User Not found"})

@@ -16,8 +16,10 @@ const Login = ({setToken}) => {
         password,
       });
       console.log(response.data)
+      console.log(response.data.token)
       if(response.status==200){
       console.log("Login response:", response.data.msg);
+      localStorage.setItem("token",response.data.token)
       setToken(response.data.token)
       nav("/");
       }

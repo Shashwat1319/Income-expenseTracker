@@ -10,7 +10,9 @@ const UserSchema = new mongoose.Schema({
     required:true
   }
 })
-const userModal = new mongoose.model("users",UserSchema)
+const userModal =
+  mongoose.models.users || mongoose.model("users", UserSchema);
+
 
 const IncomeSchema =new mongoose.Schema({
   userId:{
@@ -28,7 +30,7 @@ const IncomeSchema =new mongoose.Schema({
   }
 },{timestamps:true})
 
-const IncomeModal = mongoose.model("incomes",IncomeSchema)
+const IncomeModal = mongoose.models.users || mongoose.model("incomes",IncomeSchema)
 
 
 const ExpenseSchema = new mongoose.Schema({
@@ -47,7 +49,7 @@ const ExpenseSchema = new mongoose.Schema({
   }
 },{timestamps:true})
 
-const ExpenseModal = mongoose.model("expense",ExpenseSchema)
+const ExpenseModal = mongoose.models.users  || mongoose.model("expense",ExpenseSchema)
 
 export {IncomeModal,ExpenseModal,userModal}
 

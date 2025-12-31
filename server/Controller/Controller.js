@@ -1,8 +1,6 @@
 
 import { IncomeModal,ExpenseModal,userModal } from "../DbModals/DbModals.js";
 import jwt from "jsonwebtoken"
-
-const Secret = "hello"
 const login = async(req, res) => {
   try{
   const { email, password } = req.body;
@@ -16,11 +14,14 @@ const login = async(req, res) => {
 
   const user = await userModal.findOne({email})
   //User Not Found
+  if(user.password !== password){
+    return res.status(401).json({msg:"Invalid Credentials"})
+  }
   if (!user) {
     return res.status(404).json({ msg: "User not Found!", error: true });
   } 
-  const token = jwt.sign({email},Secret,{expiresIn:"7d"})
-  res.status(200).json({msg:"Login Successfull",success:true,token})
+  const token = jwt.sign({email},process.env.SECRET_CODE,{expiresIn:"7d"})
+  res.status(200).json({msg:"Login Successfull",success:true,token:token})
   }catch(err){
     res.status(500).json({msg:"Internal Server Error",error:err.message})
   }
