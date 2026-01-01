@@ -11,7 +11,7 @@ const Login = ({setToken}) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("https://income-expense-tracker-crjld29yi.vercel.app/api/login", {
+      const response = await axios.post("https://income-expence-backend-hx41ig61x.vercel.app/api/login", {
         email,
         password,
       });

@@ -8,7 +8,7 @@ const Modals = ({ id, title, mode }) => {
 
   const addEntry = async () => {
     try {
-      const url = `https://income-expense-tracker-crjld29yi.vercel.app/api/${mode}`;
+      const url = `https://income-expence-backend-fsqz68tkv.vercel.app/api/${mode}`;
       const response = await axios.post(url, { amount:Number(amount), Why },{headers:{
         Authorization: `Bearer ${token}`
       }});

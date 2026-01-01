@@ -8,7 +8,7 @@ const Income = () => {
     useEffect(()=>{
 const allIncome=async()=>{
         try{
-            const response = await axios.get(`https://income-expense-tracker-crjld29yi.vercel.app/api/getincome?month=${month}&year=${year}`,{headers:{Authorization: `Bearer ${token}`}})
+            const response = await axios.get(`https://income-expence-backend-fsqz68tkv.vercel.app/api/getincome?month=${month}&year=${year}`,{headers:{Authorization: `Bearer ${token}`}})
             setIncomeData(response.data.data)
         }catch(err){
             console.log("Error:",err.message)

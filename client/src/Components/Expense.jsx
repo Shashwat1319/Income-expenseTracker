@@ -9,7 +9,7 @@ const Expense = () => {
   useEffect(() => {
     const allExpense = async () => {
       try {
-        const response = await axios.get(`https://income-expense-tracker-crjld29yi.vercel.app/api/getexpense?month=${month}&year=${year}`,{headers:{
+        const response = await axios.get(`https://income-expence-backend-fsqz68tkv.vercel.app/api/getexpense?month=${month}&year=${year}`,{headers:{
         Authorization: `Bearer ${token}`
       }});
         setExpenseData(response.data.data);
